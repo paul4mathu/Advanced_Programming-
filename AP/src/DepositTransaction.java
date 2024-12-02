@@ -8,5 +8,6 @@ public class DepositTransaction extends BaseTransaction {
     @Override
     public void apply(BankAccount ba) {
         ba.deposit(amount);
+        System.out.println("Deposited " + amount + " to account: " + ba.getAccountNumber());
     }
 }

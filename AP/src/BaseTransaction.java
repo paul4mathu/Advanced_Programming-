@@ -1,6 +1,6 @@
 import java.util.Calendar;
 
-public abstract class BaseTransaction implements TransactionInterface {
+public class BaseTransaction implements TransactionInterface {
     protected double amount;
     protected Calendar date;
     protected String transactionID;
@@ -12,13 +12,19 @@ public abstract class BaseTransaction implements TransactionInterface {
     }
 
     @Override
-    public double getAmount() { return amount; }
+    public double getAmount() {
+        return amount;
+    }
 
     @Override
-    public Calendar getDate() { return date; }
+    public Calendar getDate() {
+        return date;
+    }
 
     @Override
-    public String getTransactionID() { return transactionID; }
+    public String getTransactionID() {
+        return transactionID;
+    }
 
     @Override
     public void printTransactionDetails() {
@@ -26,5 +32,7 @@ public abstract class BaseTransaction implements TransactionInterface {
     }
 
     @Override
-    public abstract void apply(BankAccount ba) throws InsufficientFundsException;
+    public void apply(BankAccount ba) {
+        System.out.println("Default apply method. Override in subclasses.");
+    }
 }
