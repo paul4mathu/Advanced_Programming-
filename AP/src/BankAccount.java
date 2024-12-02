@@ -10,6 +10,10 @@ public class BankAccount {
         this.balance = initialBalance;
     }
 
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
     public double getBalance() {
         return balance;
     }
@@ -19,6 +23,9 @@ public class BankAccount {
     }
 
     public void withdraw(double amount) {
+        if (amount > balance) {
+            throw new IllegalArgumentException("Insufficient funds.");
+        }
         balance -= amount;
     }
 }

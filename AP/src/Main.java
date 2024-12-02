@@ -2,35 +2,48 @@ import java.util.Calendar;
 
 public class Main {
     public static void main(String[] args) throws InsufficientFundsException {
-        //  BankAccount object
+        // Create BankAccount object
         BankAccount account = new BankAccount("63196319", 5000.00);
 
-        // DepositTransaction 
+        // DepositTransaction
         BaseTransaction deposit = new DepositTransaction(1000.00, Calendar.getInstance(), "PAA1");
-        deposit.apply(account);  // Deposit
-        deposit.printTransactionDetails();  // depo details
+        deposit.apply(account);
+        deposit.printTransactionDetails();
 
-        // WithdrawalTransaction 
-        BaseTransaction withdrawal = new WithdrawalTransaction(500.00, Calendar.getInstance(), "PAA2");
+        // WithdrawalTransaction
+        WithdrawalTransaction withdrawal = new WithdrawalTransaction(500.00, Calendar.getInstance(), "PAA2");
 
         try {
-            withdrawal.apply(account);  
+            withdrawal.apply(account);
         } catch (InsufficientFundsException e) {
             System.out.println("Error: " + e.getMessage());
         }
-        withdrawal.printTransactionDetails();  //withdrawal details
+        withdrawal.printTransactionDetails();
 
-        // large withdrawal - InsufficientFundsException
-        BaseTransaction largeWithdrawal = new WithdrawalTransaction(6500.00, Calendar.getInstance(), "PAA3");
+        // Reversal of withdrawal
+        withdrawal.reverse(account);
+
+        // Large withdrawal - InsufficientFundsException
+        WithdrawalTransaction largeWithdrawal = new WithdrawalTransaction(6500.00, Calendar.getInstance(), "PAA3");
 
         try {
-            largeWithdrawal.apply(account); 
+            largeWithdrawal.apply(account);
         } catch (InsufficientFundsException e) {
             System.out.println("Error: " + e.getMessage());
         }
         largeWithdrawal.printTransactionDetails();
 
-        //Final Account Balance
+        // Partial withdrawal
+        WithdrawalTransaction partialWithdrawal = new WithdrawalTransaction(2000.00, Calendar.getInstance(), "PAA4");
+
+        try {
+            partialWithdrawal.apply(account, true);
+        } catch (InsufficientFundsException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        partialWithdrawal.printTransactionDetails();
+
+        // Final Account Balance
         System.out.println("Final Account Balance: " + account.getBalance());
     }
 }
